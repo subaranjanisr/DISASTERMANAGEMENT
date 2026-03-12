@@ -1,0 +1,9 @@
+{
+    "name": "safeguard-frontend",
+    "version": "1.0.0",
+    "description": "SAFEGUARD Frontend - Static HTML/CSS/JS",
+    "scripts": {
+        "dev": "npx live-server --port=3000 --open=index.html",
+        "start": "npx http-server -p 3000 -o"
+    }
+}

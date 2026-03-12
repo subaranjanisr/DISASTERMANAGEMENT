@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFEGUARD - Login</title>
+    <meta name="description" content="Login to SAFEGUARD - Access your disaster preparedness dashboard">
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background -->
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                <span class="logo-text">SAFEGUARD</span>
+            </div>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+
+        <!-- Role Selection Screen -->
+        <div class="screen active" id="roleScreen">
+            <div class="content-wrapper">
+                <h1 class="main-title">Choose Your Role</h1>
+                <p class="subtitle">Select how you'll access SAFEGUARD</p>
+
+                <div class="role-cards">
+                    <div class="role-card" onclick="showLogin('student')">
+                        <div class="role-icon"></div>
+                        <h2>Student</h2>
+                        <p>Access training, simulations, and track your preparedness progress</p>
+                        <div class="role-arrow">→</div>
+                    </div>
+
+                    <div class="role-card" onclick="showLogin('admin')">
+                        <div class="role-icon"></div>
+                        <h2>Administrator</h2>
+                        <p>Manage institutions, monitor progress, and coordinate drills</p>
+                        <div class="role-arrow">→</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Login Screen -->
+        <div class="screen" id="studentScreen">
+            <div class="content-wrapper">
+                <div class="login-header">
+                    <div class="role-badge student-badge">
+                        <span></span>
+                        <span>Student Portal</span>
+                    </div>
+                    <h1 class="login-title">Welcome Back</h1>
+                    <p class="login-subtitle">Continue your preparedness journey</p>
+                </div>
+
+                <form class="login-form" onsubmit="handleLogin(event, 'student')">
+                    <div class="form-group">
+                        <label for="studentEmail">Email or Student ID</label>
+                        <input type="text" id="studentEmail" placeholder="Enter your email or student ID" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentPassword">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="studentPassword" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('studentPassword')">
+
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="link" onclick="forgotPassword('student')">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span>Login</span>
+                        <span>→</span>
+                    </button>
+
+                    <div class="divider">
+                        <span>Don't have an account?</span>
+                    </div>
+
+                    <button type="button" class="btn btn-outline" onclick="window.location.href='signup.html'">
+                        <span>Create Account</span>
+                        <span></span>
+                    </button>
+                </form>
+
+                <button class="back-btn" onclick="showRole()">← Back to Role Selection</button>
+            </div>
+        </div>
+
+        <!-- Admin Login Screen -->
+        <div class="screen" id="adminScreen">
+            <div class="content-wrapper">
+                <div class="login-header">
+                    <div class="role-badge admin-badge">
+                        <span></span>
+                        <span>Administrator Portal</span>
+                    </div>
+                    <h1 class="login-title">Secure Access</h1>
+                    <p class="login-subtitle">Institutional management dashboard</p>
+                </div>
+
+                <div class="security-notice">
+                    <span></span>
+                    <span>Secure area - All login attempts are monitored</span>
+                </div>
+
+                <form class="login-form" onsubmit="handleLogin(event, 'admin')">
+                    <div class="form-group">
+                        <label for="adminEmail">Administrator Email</label>
+                        <input type="email" id="adminEmail" placeholder="admin@institution.edu" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="adminPassword" placeholder="Enter your secure password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('adminPassword')">
+
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Remember this device</span>
+                        </label>
+                        <a href="#" class="link" onclick="forgotPassword('admin')">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span>Secure Login</span>
+                        <span></span>
+                    </button>
+                </form>
+
+                <button class="back-btn" onclick="showRole()">← Back to Role Selection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div class="dashboard-container" id="studentDashboard">
+        <!-- Dashboard Navigation -->
+        <nav class="dash-nav">
+            <div class="dash-logo">
+                <span class="logo-icon"></span>
+                <span class="logo-text">SAFEGUARD</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active"><span class="nav-icon"></span>Dashboard</a>
+                <a href="#"><span class="nav-icon"></span>Drills</a>
+                <a href="#"><span class="nav-icon"></span>Learning</a>
+                <a href="#"><span class="nav-icon"></span>Achievements</a>
+                <a href="#"><span class="nav-icon"></span>Settings</a>
+            </div>
+            <div class="user-profile-mini">
+                <div class="avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student123" alt="Student">
+                </div>
+                <div class="user-info">
+                    <span class="name">Suba</span>
+                    <span class="level">Level 5 Hero</span>
+                    <a href="#" class="logout-link" onclick="logout()"
+                        style="font-size: 0.7rem; color: #ff6b6b; margin-top: 4px; text-decoration: none;">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <main class="dash-content">
+            <!-- Header & Welcome -->
+            <header class="dash-header">
+                <div class="welcome-text">
+                    <h1>Welcome back, <span class="gradient-text">Suba</span>!</h1>
+                    <p>You are 85% ready for any disaster. Let's reach 100%.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn notification-btn" onclick="toggleNotifications()">
+
+                        <span class="badge">3</span>
+                    </button>
+                    <!-- Notifications Panel -->
+                    <div class="notifications-panel" id="notificationsPanel">
+                        <div class="panel-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-read">Mark all as read</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notif-icon"></div>
+                                <div class="notif-content">
+                                    <p class="notif-msg">New Fire Drill Assigned</p>
+                                    <span class="notif-time">10 min ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notif-icon"></div>
+                                <div class="notif-content">
+                                    <p class="notif-msg">Badge Earned: First Responder</p>
+                                    <span class="notif-time">1 hour ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notif-icon"></div>
+                                <div class="notif-content">
+                                    <p class="notif-msg">Safety protocols updated</p>
+                                    <span class="notif-time">Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger sos-btn">
+                        <span>SOS GUIDE</span>
+                        <span class="pulse-ring"></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card glass-card">
+                    <div class="stat-icon"></div>
+                    <div class="stat-info">
+                        <h3>Preparedness Score</h3>
+                        <div class="score-circle" style="--percent: 85">
+                            <svg>
+                                <circle cx="40" cy="40" r="35"></circle>
+                                <circle cx="40" cy="40" r="35"></circle>
+                            </svg>
+                            <span>85%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon"></div>
+                    <div class="stat-info">
+                        <h3>Drills Completed</h3>
+                        <span class="stat-value">12/15</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon"></div>
+                    <div class="stat-info">
+                        <h3>Badges Earned</h3>
+                        <span class="stat-value">8</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon"></div>
+                    <div class="stat-info">
+                        <h3>Streak</h3>
+                        <span class="stat-value">5 Days</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Sections Grid -->
+            <div class="main-grid">
+                <!-- VR Drills Section -->
+                <section class="drills-section glass-card">
+                    <div class="section-head">
+                        <h2><span class="icon"></span> Immersive VR Drills</h2>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="drills-list">
+                        <div class="drill-card">
+                            <div class="drill-image earthquake-bg">
+                                <span class="drill-tag">High Priority</span>
+                            </div>
+                            <div class="drill-content">
+                                <h3>Earthquake Survival</h3>
+                                <p>Practice "Drop, Cover, and Hold On" in a simulated magnitude 7.0 quake.</p>
+                                <div class="progress-bar">
+                                    <div class="fill" style="width: 100%"></div>
+                                </div>
+                                <div class="drill-meta">
+                                    <span class="status completed">Completed</span>
+                                    <span class="score">Score: 950</span>
+                                </div>
+                                <button class="btn btn-sm" onclick="startDrill('earthquake')">Retake Drill</button>
+                            </div>
+                        </div>
+                        <div class="drill-card">
+                            <div class="drill-image fire-bg">
+                            </div>
+                            <div class="drill-content">
+                                <h3>Fire Evacuation</h3>
+                                <p>Navigate smoke-filled corridors and find the nearest exit safely.</p>
+                                <div class="progress-bar">
+                                    <div class="fill" style="width: 40%"></div>
+                                </div>
+                                <div class="drill-meta">
+                                    <span class="status in-progress">In Progress</span>
+                                    <span class="time-left">10 min left</span>
+                                </div>
+                                <button class="btn btn-primary btn-sm" onclick="startDrill('fire')">Continue</button>
+                            </div>
+                        </div>
+                        <div class="drill-card">
+                            <div class="drill-image flood-bg">
+                                <span class="drill-tag new">New</span>
+                            </div>
+                            <div class="drill-content">
+                                <h3>Flood Response</h3>
+                                <p>Learn to identify safe zones and secure critical documents.</p>
+                                <div class="progress-bar">
+                                    <div class="fill" style="width: 0%"></div>
+                                </div>
+                                <div class="drill-meta">
+                                    <span class="status pending">Not Started</span>
+                                </div>
+                                <button class="btn btn-primary btn-sm" onclick="startDrill('flood')">Start
+                                    Drill</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Learning & Achievements Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <!-- AI Assistant -->
+                    <div class="ai-widget glass-card">
+                        <div class="ai-header">
+                            <div class="ai-avatar"></div>
+                            <div class="ai-info">
+                                <h4>AI tutor</h4>
+                                <span class="online-status">Online</span>
+                            </div>
+                        </div>
+                        <div class="chat-area">
+                            <div class="msg ai">Hello Suba! Ready for your fire safety module?</div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Ask about safety...">
+                            <button>→</button>
+                        </div>
+                    </div>
+
+                    <!-- Learning Widget -->
+                    <div class="learning-widget glass-card">
+                        <h3>Recommended Learning</h3>
+                        <div class="learning-item">
+                            <div class="learning-thumb">
+                                <span class="duration">5 min</span>
+                            </div>
+                            <div class="learning-info">
+                                <h4>CPR Basics</h4>
+                                <span class="tag">Essential</span>
+                            </div>
+                            <button class="btn-play">▶</button>
+                        </div>
+                        <div class="learning-item">
+                            <div class="learning-thumb thumb-2">
+                                <span class="duration">8 min</span>
+                            </div>
+                            <div class="learning-info">
+                                <h4>Fire Extinguisher Types</h4>
+                                <span class="tag">Advanced</span>
+                            </div>
+                            <button class="btn-play"></button>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="achievements-widget glass-card">
+                        <h3>Latest Achievements</h3>
+                        <div class="badges-grid">
+                            <div class="badge-item" title="First Drill"></div>
+                            <div class="badge-item" title="Speed Runner"></div>
+                            <div class="badge-item" title="Safety Guru"></div>
+                            <div class="badge-item locked" title="Locked"></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon"></div>
+            <h2>Login Successful!</h2>
+            <p id="successMessage">Redirecting to dashboard...</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="modal-icon error">❌</div>
+            <h2>Login Failed</h2>
+            <p id="errorMessage">Invalid credentials. Please try again.</p>
+            <button class="btn btn-primary" onclick="closeModal()">Try Again</button>
+        </div>
+    </div>
+
+    <!-- SOS Modal -->
+    <div class="modal sos-modal" id="sosModal">
+        <div class="modal-content sos-content">
+            <div class="sos-header">
+                <h2> EMERGENCY GUIDANCE</h2>
+                <button class="close-sos" onclick="toggleSOS()">×</button>
+            </div>
+            <div class="sos-options">
+                <button class="sos-option red" onclick="showGuide('fire')">
+                    <span class="icon"></span>
+                    <span>FIRE</span>
+                </button>
+                <button class="sos-option blue" onclick="showGuide('flood')">
+                    <span class="icon"></span>
+                    <span>FLOOD</span>
+                </button>
+                <button class="sos-option brown" onclick="showGuide('earthquake')">
+                    <span class="icon"></span>
+                    <span>EARTHQUAKE</span>
+                </button>
+                <button class="sos-option green" onclick="showGuide('medical')">
+                    <span class="icon"></span>
+                    <span>MEDICAL</span>
+                </button>
+            </div>
+            <div class="emergency-contacts">
+                <p><strong>Campus Security:</strong> 123-456-7890</p>
+                <p><strong>Emergency:</strong> 911</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>

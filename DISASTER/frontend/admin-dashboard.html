@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFEGUARD - Administrator Dashboard</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="admin-body">
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">SAFEGUARD ADMIN</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">📊</span> Overview
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">👥</span> Students
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🎮</span> Drill Analytics
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🏛️</span> Institutional Settings
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📢</span> Announcements
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-profile">
+                    <div class="admin-avatar" id="adminAvatar">A</div>
+                    <div class="admin-info">
+                        <p class="admin-name" id="adminName">Loading...</p>
+                        <p class="admin-role" id="adminInstitution">Institution Name</p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="content-header">
+                <div class="header-left">
+                    <h1 id="welcomeHeader">Admin Overview</h1>
+                    <p id="currentDate"></p>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <span>🔍</span>
+                        <input type="text" placeholder="Search students or records...">
+                    </div>
+                    <button class="notification-trigger">
+                        🔔 <span class="badge">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon students">👥</span>
+                        <span class="stat-trend up">+12%</span>
+                    </div>
+                    <div class="stat-main">
+                        <h3 id="statTotalStudents">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon active">📈</span>
+                        <span class="stat-trend up">+5%</span>
+                    </div>
+                    <div class="stat-main">
+                        <h3 id="statActiveStudents">0</h3>
+                        <p>Active This Week</p>
+                    </div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon readiness">🛡️</span>
+                        <span class="stat-trend">stable</span>
+                    </div>
+                    <div class="stat-main">
+                        <h3 id="statAvgScore">0%</h3>
+                        <p>Avg Preparedness</p>
+                    </div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon drills">🎮</span>
+                    </div>
+                    <div class="stat-main">
+                        <h3 id="statDrillsCompleted">0</h3>
+                        <p>Drills Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Recent Students -->
+                <section class="grid-section">
+                    <div class="section-header">
+                        <h2>Recent Registrations</h2>
+                        <a href="#" class="view-link">View All</a>
+                    </div>
+                    <div class="table-container">
+                        <table id="recentStudentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Status</th>
+                                    <th>Institution</th>
+                                    <th>Score</th>
+                                    <th>Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- System Health -->
+                <section class="grid-section">
+                    <div class="section-header">
+                        <h2>Institutional Health</h2>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-item">
+                            <div class="health-label">
+                                <span>Drill Engagement</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-label">
+                                <span>Module Completion</span>
+                                <span>64%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="fill" style="width: 64%; background: var(--secondary);"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-label">
+                                <span>Security Compliance</span>
+                                <span>100%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="fill" style="width: 100%; background: var(--success);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+
+</html>

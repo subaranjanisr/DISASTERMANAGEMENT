@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFEGUARD - Create Account</title>
+    <meta name="description" content="Create your SAFEGUARD account — join the disaster preparedness learning platform">
+    <link rel="stylesheet" href="signup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="signup-wrapper">
+
+        <!-- Left Panel — Branding -->
+        <div class="brand-panel">
+            <div class="brand-content">
+                <div class="logo">
+                    <span class="logo-icon">🛡️</span>
+                    <span class="logo-text">SAFEGUARD</span>
+                </div>
+                <h1 class="brand-title">Your Journey to<br><span class="gradient-text">Safety Begins Here</span></h1>
+                <p class="brand-desc">Join thousands of students and administrators
+                    preparing for real-world disasters through immersive VR drills and AI-powered training.</p>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <span class="feat-icon">🥽</span>
+                        <div>
+                            <h4>Immersive VR Drills</h4>
+                            <p>Practice in realistic disaster simulations</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feat-icon">🎮</span>
+                        <div>
+                            <h4>Gamified Learning</h4>
+                            <p>Earn badges, XP points and climb the leaderboard</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feat-icon">🤖</span>
+                        <div>
+                            <h4>AI Safety Tutor</h4>
+                            <p>24/7 intelligent guidance and personalized feedback</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feat-icon">📊</span>
+                        <div>
+                            <h4>Progress Tracking</h4>
+                            <p>Monitor your preparedness score and achievements</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="already-have">
+                    Already have an account?
+                    <a href="login.html" class="signin-link">Sign In →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel — Signup Form -->
+        <div class="form-panel">
+            <div class="form-container">
+
+                <!-- Progress Steps -->
+                <div class="steps-indicator">
+                    <div class="step active" id="step-dot-1">
+                        <div class="step-dot">1</div>
+                        <span>Role</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step-dot-2">
+                        <div class="step-dot">2</div>
+                        <span>Details</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step-dot-3">
+                        <div class="step-dot">3</div>
+                        <span>Security</span>
+                    </div>
+                </div>
+
+                <!-- STEP 1: Role Selection -->
+                <div class="form-step active" id="formStep1">
+                    <div class="step-header">
+                        <h2>Choose Your Role</h2>
+                        <p>Select the role that best describes how you'll use SAFEGUARD</p>
+                    </div>
+
+                    <div class="role-cards">
+                        <div class="role-card" id="roleStudent" onclick="selectRole('student')">
+                            <div class="role-icon-wrap">🎓</div>
+                            <h3>Student</h3>
+                            <p>Access training modules, VR drills, earn badges and track your disaster preparedness
+                                score</p>
+                            <ul class="role-perks">
+                                <li>✓ VR Disaster Drills</li>
+                                <li>✓ Personal Dashboard</li>
+                                <li>✓ Leaderboard & Badges</li>
+                            </ul>
+                            <div class="select-badge">Select</div>
+                        </div>
+
+                        <div class="role-card" id="roleAdmin" onclick="selectRole('admin')">
+                            <div class="role-icon-wrap">🏢</div>
+                            <h3>Administrator</h3>
+                            <p>Manage your institution's students, monitor progress and coordinate safety drills</p>
+                            <ul class="role-perks">
+                                <li>✓ Manage Students</li>
+                                <li>✓ Analytics Dashboard</li>
+                                <li>✓ Drill Coordination</li>
+                            </ul>
+                            <div class="select-badge">Select</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-next" id="step1Next" onclick="goToStep(2)" disabled>
+                        <span>Continue</span>
+                        <span>→</span>
+                    </button>
+                </div>
+
+                <!-- STEP 2: Personal Details -->
+                <div class="form-step" id="formStep2">
+                    <div class="step-header">
+                        <h2>Personal Details</h2>
+                        <p>Fill in your profile information</p>
+                    </div>
+
+                    <form id="signupForm" onsubmit="return false;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name <span class="req">*</span></label>
+                                <input type="text" id="firstName" placeholder="e.g. Jamie" required maxlength="50">
+                                <span class="field-error" id="firstNameErr"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name <span class="req">*</span></label>
+                                <input type="text" id="lastName" placeholder="e.g. Doe" required maxlength="50">
+                                <span class="field-error" id="lastNameErr"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="req">*</span></label>
+                            <input type="email" id="email" placeholder="you@institution.edu" required>
+                            <span class="field-error" id="emailErr"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="institution">Institution / School <span class="req">*</span></label>
+                            <input type="text" id="institution" placeholder="e.g. National University of Safety"
+                                maxlength="100">
+                            <span class="field-error" id="institutionErr"></span>
+                        </div>
+
+                        <!-- Student-only fields -->
+                        <div class="student-fields" id="studentFields">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="course">Course / Program</label>
+                                    <input type="text" id="course" placeholder="e.g. Civil Engineering">
+                                </div>
+                                <div class="form-group">
+                                    <label for="grade">Grade / Year</label>
+                                    <input type="text" id="grade" placeholder="e.g. Year 3">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="+1 (555) 000-0000">
+                            </div>
+                        </div>
+
+                        <!-- Admin-only fields -->
+                        <div class="admin-fields" id="adminFields" style="display:none;">
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <input type="text" id="department" placeholder="e.g. Safety & Emergency Management">
+                            </div>
+                            <div class="form-group">
+                                <label for="adminCode">Admin Authorization Code <span class="req">*</span></label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="adminCode"
+                                        placeholder="Enter the admin access code provided by your institution">
+                                    <button type="button" class="toggle-password"
+                                        onclick="togglePassword('adminCode')">👁️</button>
+                                </div>
+                                <span class="field-hint">Contact your institution's IT department for this code.</span>
+                                <span class="field-error" id="adminCodeErr"></span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="step-actions">
+                        <button class="btn btn-outline" onclick="goToStep(1)">← Back</button>
+                        <button class="btn btn-primary" onclick="goToStep(3)">
+                            <span>Continue</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Security (Password) -->
+                <div class="form-step" id="formStep3">
+                    <div class="step-header">
+                        <h2>Secure Your Account</h2>
+                        <p>Create a strong password to protect your account</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password <span class="req">*</span></label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" placeholder="Minimum 8 characters"
+                                oninput="checkPasswordStrength(this.value)" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('password')"></button>
+                        </div>
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                        <span class="strength-label" id="strengthLabel"></span>
+                        <div class="password-rules" id="passwordRules">
+                            <div class="rule" id="rule-length">✗ At least 8 characters</div>
+                            <div class="rule" id="rule-upper">✗ One uppercase letter</div>
+                            <div class="rule" id="rule-lower">✗ One lowercase letter</div>
+                            <div class="rule" id="rule-number">✗ One number</div>
+                        </div>
+                        <span class="field-error" id="passwordErr"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password <span class="req">*</span></label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirmPassword" placeholder="Re-enter your password"
+                                oninput="checkConfirmPassword()" required>
+                            <button type="button" class="toggle-password"
+                                onclick="togglePassword('confirmPassword')"></button>
+                        </div>
+                        <span class="field-error" id="confirmPasswordErr"></span>
+                    </div>
+
+                    <div class="terms-check">
+                        <label class="checkbox-label" for="agreeTerms">
+                            <input type="checkbox" id="agreeTerms">
+                            <span>I agree to the <a href="#" class="link">Terms of Service</a> and
+                                <a href="#" class="link">Privacy Policy</a></span>
+                        </label>
+                    </div>
+
+                    <!-- Summary Review -->
+                    <div class="review-card" id="reviewCard">
+                        <h4> Account Summary</h4>
+                        <div class="review-grid">
+                            <span class="review-label">Role</span>
+                            <span class="review-value" id="reviewRole">—</span>
+                            <span class="review-label">Name</span>
+                            <span class="review-value" id="reviewName">—</span>
+                            <span class="review-label">Email</span>
+                            <span class="review-value" id="reviewEmail">—</span>
+                            <span class="review-label">Institution</span>
+                            <span class="review-value" id="reviewInstitution">—</span>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button class="btn btn-outline" onclick="goToStep(2)">← Back</button>
+                        <button class="btn btn-primary btn-signup" id="signupBtn" onclick="handleSignup()">
+                            <span>Create Account</span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Screen -->
+                <div class="form-step" id="successStep">
+                    <div class="success-screen">
+                        <div class="success-icon">🎉</div>
+                        <h2>Account Created!</h2>
+                        <p id="successDesc">Welcome to SAFEGUARD! Your account is ready.</p>
+                        <div class="student-id-box" id="studentIdBox" style="display:none;">
+                            <span class="sid-label">Your Student ID</span>
+                            <span class="sid-value" id="studentIdDisplay">—</span>
+                            <p class="sid-hint">Keep this ID safe — you'll need it for login.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="window.location.href='login.html'">
+                            <span>Go to Login</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div class="toast" id="errorToast">
+        <span class="toast-icon">❌</span>
+        <span class="toast-msg" id="toastMsg">Error message here</span>
+        <button class="toast-close" onclick="closeToast()">×</button>
+    </div>
+
+    <script src="signup.js"></script>
+</body>
+
+</html>
