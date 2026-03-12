@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFEGUARD — Student Command Center</title>
+    <meta name="description"
+        content="Your personal disaster preparedness command center. Train, learn, and become a disaster-ready hero.">
+    <link rel="stylesheet" href="student-dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  SIDEBAR NAVIGATION                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <span class="logo-shield">🛡️</span>
+            <span class="logo-text">SAFE<span>GUARD</span></span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-section="dashboard" onclick="switchSection('dashboard', this)">
+                <span class="nav-icon">⚡</span>
+                <span class="nav-label">Command Center</span>
+                <span class="nav-ping"></span>
+            </a>
+            <a href="#" class="nav-item" data-section="drills" onclick="switchSection('drills', this)">
+                <span class="nav-icon">🥽</span>
+                <span class="nav-label">VR Drills</span>
+                <span class="nav-badge">3</span>
+            </a>
+            <a href="#" class="nav-item" data-section="learning" onclick="switchSection('learning', this)">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">Learning Hub</span>
+            </a>
+            <a href="#" class="nav-item" data-section="progress" onclick="switchSection('progress', this)">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">My Progress</span>
+            </a>
+            <a href="#" class="nav-item" data-section="achievements" onclick="switchSection('achievements', this)">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-label">Achievements</span>
+                <span class="nav-badge gold">5</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar-wrap">
+                <img src="" alt="Avatar" class="user-avatar" id="sidebarAvatar">
+                <span class="avatar-status"></span>
+            </div>
+            <div class="user-meta">
+                <span class="user-name" id="sidebarName">Loading...</span>
+                <span class="user-level-tag" id="sidebarLevel">Level 1</span>
+            </div>
+            <button class="logout-btn" onclick="logout()" title="Logout">⏻</button>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  MAIN CONTENT                              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <main class="main-content" id="mainContent">
+
+        <!-- TOP HEADER BAR -->
+        <header class="top-bar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">
+                    <span id="sectionLabel">Command Center</span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search drills, safety tips..." id="searchInput"
+                        oninput="handleSearch(this.value)">
+                </div>
+                <button class="icon-action-btn notif-btn" onclick="toggleNotifications()" id="notifBtn">
+                    🔔
+                    <span class="notif-dot" id="notifDot"></span>
+                </button>
+                <button class="sos-trigger-btn" onclick="openSOS()">
+                    <span class="sos-pulse"></span>
+                    🆘 SOS
+                </button>
+            </div>
+        </header>
+
+        <!-- ─────────────────────────────────── -->
+        <!--  SECTION: COMMAND CENTER (HOME)    -->
+        <!-- ─────────────────────────────────── -->
+        <section class="section active" id="section-dashboard">
+
+            <!-- HERO WELCOME BANNER -->
+            <div class="hero-banner">
+                <div class="hero-left">
+                    <div class="greeting-tag">
+                        <span class="pulse-dot"></span>
+                        <span id="greetingTime">Good Morning</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Welcome back, <span class="hero-name" id="heroName">Hero</span>!
+                    </h1>
+                    <p class="hero-subtitle" id="heroSubtitle">
+                        You're 72% disaster-ready. Complete today's fire evacuation drill to level up! 🔥
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="startQuickDrill()">
+                            <span>▶ Start Daily Drill</span>
+                            <span class="xp-tag">+150 XP</span>
+                        </button>
+                        <button class="btn-ghost"
+                            onclick="switchSection('learning', document.querySelector('[data-section=learning]'))">
+                            📚 Browse Lessons
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <div class="score-orbit">
+                        <div class="orbit-ring ring-1"></div>
+                        <div class="orbit-ring ring-2"></div>
+                        <div class="orbit-ring ring-3"></div>
+                        <div class="score-center">
+                            <svg class="score-svg" viewBox="0 0 120 120">
+                                <circle class="score-track" cx="60" cy="60" r="52" />
+                                <circle class="score-fill" cx="60" cy="60" r="52" id="scoreFill" />
+                            </svg>
+                            <div class="score-inner">
+                                <span class="score-num" id="scoreNum">72</span>
+                                <span class="score-unit">%</span>
+                                <span class="score-lbl">Ready</span>
+                            </div>
+                        </div>
+                        <div class="orbit-badge" id="levelBadge">
+                            <span>⭐</span>
+                            <span id="orbLevel">Lvl 4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS ROW -->
+            <div class="stats-row">
+                <div class="stat-card" id="statDrills">
+                    <div class="stat-icon-wrap drill-color">🥽</div>
+                    <div class="stat-info">
+                        <span class="stat-num" id="drillsNum">12</span>
+                        <span class="stat-lbl">Drills Done</span>
+                    </div>
+                    <div class="stat-trend up">+2 this week</div>
+                </div>
+                <div class="stat-card" id="statXP">
+                    <div class="stat-icon-wrap xp-color">⚡</div>
+                    <div class="stat-info">
+                        <span class="stat-num" id="xpNum">1,450</span>
+                        <span class="stat-lbl">XP Points</span>
+                    </div>
+                    <div class="stat-trend up">Level 4 Hero</div>
+                </div>
+                <div class="stat-card" id="statStreak">
+                    <div class="stat-icon-wrap fire-color">🔥</div>
+                    <div class="stat-info">
+                        <span class="stat-num" id="streakNum">7</span>
+                        <span class="stat-lbl">Day Streak</span>
+                    </div>
+                    <div class="stat-trend up">Personal Best!</div>
+                </div>
+                <div class="stat-card" id="statBadges">
+                    <div class="stat-icon-wrap badge-color">🏅</div>
+                    <div class="stat-info">
+                        <span class="stat-num">8</span>
+                        <span class="stat-lbl">Badges Earned</span>
+                    </div>
+                    <div class="stat-trend">3 more to unlock</div>
+                </div>
+            </div>
+
+            <!-- MAIN GRID: DRILLS + SIDEBAR -->
+            <div class="dashboard-grid">
+
+                <!-- LEFT: VR DRILLS PREVIEW -->
+                <div class="drills-preview card-glass">
+                    <div class="card-header">
+                        <h2>🥽 Active VR Drills</h2>
+                        <button class="view-all-btn"
+                            onclick="switchSection('drills', document.querySelector('[data-section=drills]'))">View All
+                            →</button>
+                    </div>
+                    <div class="drill-mini-list">
+                        <div class="drill-mini-card earthquake-theme">
+                            <div class="drill-mini-left">
+                                <div class="drill-mini-icon">🏚️</div>
+                                <div>
+                                    <h4>Earthquake Survival</h4>
+                                    <p>Drop, Cover, Hold On</p>
+                                </div>
+                            </div>
+                            <div class="drill-mini-right">
+                                <div class="mini-progress">
+                                    <div class="mini-bar" style="width:100%"></div>
+                                </div>
+                                <span class="drill-badge completed">✓ Done</span>
+                                <button class="mini-btn" onclick="openDrillModal('earthquake')">↩ Retry</button>
+                            </div>
+                        </div>
+                        <div class="drill-mini-card fire-theme">
+                            <div class="drill-mini-left">
+                                <div class="drill-mini-icon">🔥</div>
+                                <div>
+                                    <h4>Fire Evacuation</h4>
+                                    <p>Navigate smoke corridors</p>
+                                </div>
+                            </div>
+                            <div class="drill-mini-right">
+                                <div class="mini-progress">
+                                    <div class="mini-bar" style="width:40%"></div>
+                                </div>
+                                <span class="drill-badge in-progress">● In Progress</span>
+                                <button class="mini-btn primary" onclick="openDrillModal('fire')">▶ Continue</button>
+                            </div>
+                        </div>
+                        <div class="drill-mini-card flood-theme">
+                            <div class="drill-mini-left">
+                                <div class="drill-mini-icon">🌊</div>
+                                <div>
+                                    <h4>Flood Response</h4>
+                                    <p>Identify safe zones</p>
+                                </div>
+                            </div>
+                            <div class="drill-mini-right">
+                                <div class="mini-progress">
+                                    <div class="mini-bar" style="width:0%"></div>
+                                </div>
+                                <span class="drill-badge pending">○ Pending</span>
+                                <button class="mini-btn primary" onclick="openDrillModal('flood')">▶ Start</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="right-col">
+
+                    <!-- AI ASSISTANT WIDGET -->
+                    <div class="ai-widget card-glass" id="aiWidget">
+                        <div class="ai-widget-head">
+                            <div class="ai-dot-avatar">
+                                <div class="ai-pulse"></div>
+                                <span></span>
+                            </div>
+                            <div>
+                                <h4>DM</h4>
+                                <span class="online-badge">● Online</span>
+                            </div>
+                            <button class="expand-chat" onclick="toggleChat()">💬</button>
+                        </div>
+                        <div class="ai-quick-msgs" id="aiQuickMsgs">
+                            <div class="ai-msg">
+                                👋 Hello! Continue your fire evacuation drill — you're 40% through!
+                            </div>
+                        </div>
+                        <div class="ai-quick-actions">
+                            <button onclick="askAI('What should I do in an earthquake?')">Earthquake tips</button>
+                            <button onclick="askAI('How do I evacuate safely?')">Evacuation help</button>
+                            <button onclick="askAI('What drills should I do next?')">Next drill</button>
+                        </div>
+                    </div>
+
+                    <!-- TODAY'S MISSIONS -->
+                    <div class="missions-widget card-glass">
+                        <div class="card-header">
+                            <h4>🎯 Today's Missions</h4>
+                            <span class="mission-progress">2/3</span>
+                        </div>
+                        <div class="mission-list">
+                            <div class="mission-item done">
+                                <span class="mission-check">✓</span>
+                                <span>Complete Earthquake Drill</span>
+                                <span class="mission-xp">+100 XP</span>
+                            </div>
+                            <div class="mission-item done">
+                                <span class="mission-check">✓</span>
+                                <span>Watch Fire Safety Video</span>
+                                <span class="mission-xp">+50 XP</span>
+                            </div>
+                            <div class="mission-item">
+                                <span class="mission-check">○</span>
+                                <span>Finish Flood Response Drill</span>
+                                <span class="mission-xp">+150 XP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────── -->
+        <!--  SECTION: VR DRILLS            -->
+        <!-- ─────────────────────────────── -->
+        <section class="section" id="section-drills">
+            <div class="section-head-row">
+                <div>
+                    <h2 class="section-title">🥽 Immersive VR Drills</h2>
+                    <p class="section-sub">Practice real-life emergency responses in safe virtual environments</p>
+                </div>
+                <div class="drill-filter">
+                    <button class="filter-btn active" onclick="filterDrills('all', this)">All</button>
+                    <button class="filter-btn" onclick="filterDrills('pending', this)">Pending</button>
+                    <button class="filter-btn" onclick="filterDrills('completed', this)">Completed</button>
+                </div>
+            </div>
+
+            <div class="drills-grid" id="drillsGrid">
+
+                <!-- EARTHQUAKE DRILL -->
+                <div class="drill-card-full earthquake-card" data-status="completed">
+                    <div class="drill-card-bg">
+                        <div class="drill-scene earthquake-scene">
+                            <div class="shake-element">🏚️</div>
+                            <div class="scene-particles"></div>
+                        </div>
+                    </div>
+                    <div class="drill-card-overlay"></div>
+                    <div class="drill-card-content">
+                        <div class="drill-top-row">
+                            <span class="drill-category-tag">Seismic</span>
+                            <span class="drill-status-badge completed">✓ Completed</span>
+                        </div>
+                        <h3>Earthquake Survival</h3>
+                        <p>Drop, Cover, and Hold On — master the fundamental earthquake safety response in a simulated
+                            magnitude 7.0 scenario.</p>
+
+                        <!-- Dynamic Live Section -->
+                        <div class="drill-live-monitor card-glass">
+                            <div class="live-monitor-header">
+                                <span class="live-indicator pulse">● Live Data</span>
+                                <span class="mag-val" id="eqMagnitude">7.2 M</span>
+                            </div>
+                            <div class="seismic-graph">
+                                <span class="bar" style="--h: 40%"></span>
+                                <span class="bar" style="--h: 70%"></span>
+                                <span class="bar active" style="--h: 90%" id="eqLiveBar"></span>
+                                <span class="bar" style="--h: 50%"></span>
+                                <span class="bar" style="--h: 30%"></span>
+                            </div>
+                            <p class="live-status">Seismic Intensity Index: <span id="eqIntensity">Extremely High</span>
+                            </p>
+                        </div>
+
+                        <div class="drill-stats-row">
+                            <div class="drill-stat"><span>⭐ Score</span><strong>950/1000</strong></div>
+                            <div class="drill-stat"><span>⏱ Time</span><strong>4m 32s</strong></div>
+                            <div class="drill-stat"><span>🎯 Accuracy</span><strong>95%</strong></div>
+                        </div>
+                        <div class="drill-progress-bar">
+                            <div class="drill-progress-fill" style="width:100%"></div>
+                        </div>
+                        <div class="drill-card-actions">
+                            <button class="drill-btn-primary" onclick="startDynamicEQ()">▶ Launch </button>
+                            <button class="drill-btn-ghost" onclick="showDrillFeedback('earthquake')">📋 Report</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIRE DRILL -->
+                <div class="drill-card-full fire-card" data-status="in-progress">
+                    <div class="drill-card-bg">
+                        <div class="drill-scene fire-scene">
+                            <div class="fire-element">🔥</div>
+                            <div class="smoke-effect"></div>
+                        </div>
+                    </div>
+                    <div class="drill-card-overlay"></div>
+                    <div class="drill-card-content">
+                        <div class="drill-top-row">
+                            <span class="drill-category-tag fire">Fire Safety</span>
+                            <span class="drill-status-badge in-progress">● In Progress</span>
+                        </div>
+                        <h3>Fire Evacuation</h3>
+                        <p>Navigate smoke-filled corridors, locate fire extinguishers, and reach the assembly point
+                            within the time limit.</p>
+
+                        <!-- Dynamic Live Section -->
+                        <div class="drill-live-monitor fire-theme card-glass">
+                            <div class="live-monitor-header">
+                                <span class="live-indicator pulse">● Tactical Feed</span>
+                                <span class="mag-val fire-hazard" id="fireHazard">Normal</span>
+                            </div>
+                            <div class="thermal-graph">
+                                <div class="thermal-bar" id="thermalBar" style="--w: 20%"></div>
+                            </div>
+                            <p class="live-status">Thermal Intensity: <span id="fireTemp">24°C</span> | O2 Level: <span
+                                    id="fireO2">21%</span></p>
+                        </div>
+
+                        <div class="drill-stats-row">
+                            <div class="drill-stat"><span>📍 Progress</span><strong>40%</strong></div>
+                            <div class="drill-stat"><span>⏱ Remaining</span><strong>10 min</strong></div>
+                            <div class="drill-stat"><span>❗ Priority</span><strong>High</strong></div>
+                        </div>
+                        <div class="drill-progress-bar">
+                            <div class="drill-progress-fill fire-fill" style="width:40%"></div>
+                        </div>
+                        <div class="drill-card-actions">
+                            <button class="drill-btn-primary" onclick="startDynamicFire()">▶ Launch</button>
+                            <button class="drill-btn-ghost" onclick="showDrillFeedback('fire')">📋 Checkpoint</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLOOD DRILL -->
+                <div class="drill-card-full flood-card" data-status="pending">
+                    <div class="drill-card-bg">
+                        <div class="drill-scene flood-scene">
+                            <div class="flood-element">🌊</div>
+                            <div class="wave-effect"></div>
+                        </div>
+                    </div>
+                    <div class="drill-card-overlay"></div>
+                    <div class="drill-card-content">
+                        <div class="drill-top-row">
+                            <span class="drill-category-tag flood">Flood Response</span>
+                            <span class="drill-status-badge pending new-badge">🆕 New</span>
+                        </div>
+                        <h3>Flood Response Protocol</h3>
+                        <p>Identify safe evacuation zones, learn to read flood warnings, and secure critical documents
+                            in a rising water scenario.</p>
+
+                        <!-- Dynamic Live Section -->
+                        <div class="drill-live-monitor flood-theme card-glass">
+                            <div class="live-monitor-header">
+                                <span class="live-indicator pulse">● Hydro-Monitor</span>
+                                <span class="mag-val flood-level" id="floodLevel">0.0m</span>
+                            </div>
+                            <div class="elevation-tracker">
+                                <div class="elevation-dot" id="elevDot" style="--y: 80%"></div>
+                                <span class="elev-label">Current Elevation: <strong id="floodElev">12m</strong></span>
+                            </div>
+                            <p class="live-status">Safe Zone Proximity: <span id="floodDist">150m</span> | Influx: <span
+                                    id="floodRate">+0.2m/min</span></p>
+                        </div>
+
+                        <div class="drill-stats-row">
+                            <div class="drill-stat"><span>⏱ Est. Time</span><strong>20 min</strong></div>
+                            <div class="drill-stat"><span>🏅 Reward</span><strong>+200 XP</strong></div>
+                            <div class="drill-stat"><span>🔒 Unlocks</span><strong>Wave Badge</strong></div>
+                        </div>
+                        <div class="drill-progress-bar">
+                            <div class="drill-progress-fill flood-fill" style="width:0%"></div>
+                        </div>
+                        <div class="drill-card-actions">
+                            <button class="drill-btn-primary" onclick="startDynamicFlood()">▶ Launch</button>
+                            <button class="drill-btn-ghost" onclick="previewDrill('flood')">👁 Preview</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDICAL DRILL (LOCKED) -->
+                <div class="drill-card-full medical-card locked" data-status="locked">
+                    <div class="drill-card-bg">
+                        <div class="drill-scene medical-scene">
+                            <div class="medical-element">🏥</div>
+                        </div>
+                    </div>
+                    <div class="drill-card-overlay locked-overlay">
+                        <div class="lock-icon">🔐</div>
+                        <p>Complete Flood Drill to Unlock</p>
+                    </div>
+                    <div class="drill-card-content locked-content">
+                        <div class="drill-top-row">
+                            <span class="drill-category-tag medical">First Aid</span>
+                            <span class="drill-status-badge locked">🔒 Locked</span>
+                        </div>
+                        <h3>Medical Emergency Response</h3>
+                        <p>CPR, bleeding control, casualty evacuation, and communicating with emergency services.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────── -->
+        <!--  SECTION: LEARNING HUB         -->
+        <!-- ─────────────────────────────── -->
+        <section class="section" id="section-learning">
+            <div class="section-head-row">
+                <div>
+                    <h2 class="section-title">📚 Learning Hub</h2>
+                    <p class="section-sub">Interactive safety lessons, videos, and reference materials</p>
+                </div>
+            </div>
+
+            <div class="learning-tabs">
+                <button class="ltab active" onclick="switchLTab('videos', this)">🎬 Videos</button>
+                <button class="ltab" onclick="switchLTab('lessons', this)">📖 Lessons</button>
+                <button class="ltab" onclick="switchLTab('checklists', this)">✅ Checklists</button>
+            </div>
+
+            <div class="ltab-content active" id="ltab-videos">
+                <div class="learning-grid">
+                    <div class="learning-card" onclick="playLesson('cpr')">
+                        <div class="learning-thumb" style="background: linear-gradient(135deg, #ef476f, #b5191d)">
+                            <span class="thumb-icon">❤️</span>
+                            <span class="duration-badge">5:30</span>
+                            <div class="play-overlay">▶</div>
+                        </div>
+                        <div class="learning-info">
+                            <span class="learning-tag">Essential</span>
+                            <h4>CPR Basics</h4>
+                            <p>Learn hands-only CPR and when to use it in emergencies</p>
+                            <div class="learning-meta">
+                                <span>👁 2.4K views</span>
+                                <span>⭐ 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="learning-card" onclick="playLesson('fire-extinguisher')">
+                        <div class="learning-thumb" style="background: linear-gradient(135deg, #f77f00, #d62828)">
+                            <span class="thumb-icon">🧯</span>
+                            <span class="duration-badge">8:15</span>
+                            <div class="play-overlay">▶</div>
+                        </div>
+                        <div class="learning-info">
+                            <span class="learning-tag">Intermediate</span>
+                            <h4>Fire Extinguisher Types</h4>
+                            <p>PASS technique and choosing the right extinguisher</p>
+                            <div class="learning-meta">
+                                <span>👁 1.9K views</span>
+                                <span>⭐ 4.7</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="learning-card" onclick="playLesson('earthquake-safety')">
+                        <div class="learning-thumb" style="background: linear-gradient(135deg, #8338ec, #3a0ca3)">
+                            <span class="thumb-icon">🏚️</span>
+                            <span class="duration-badge">6:45</span>
+                            <div class="play-overlay">▶</div>
+                        </div>
+                        <div class="learning-info">
+                            <span class="learning-tag">Fundamental</span>
+                            <h4>Earthquake Safety Protocol</h4>
+                            <p>Before, during and after an earthquake — complete guide</p>
+                            <div class="learning-meta">
+                                <span>👁 3.1K views</span>
+                                <span>⭐ 4.8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="learning-card" onclick="playLesson('flood-survival')">
+                        <div class="learning-thumb" style="background: linear-gradient(135deg, #4361ee, #023e8a)">
+                            <span class="thumb-icon">🌊</span>
+                            <span class="duration-badge">9:00</span>
+                            <div class="play-overlay">▶</div>
+                        </div>
+                        <div class="learning-info">
+                            <span class="learning-tag">Advanced</span>
+                            <h4>Flood Survival Strategies</h4>
+                            <p>Reading flood maps, emergency kits, and safe zones</p>
+                            <div class="learning-meta">
+                                <span>👁 1.2K views</span>
+                                <span>⭐ 4.6</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="learning-card" onclick="playLesson('first-aid')">
+                        <div class="learning-thumb" style="background: linear-gradient(135deg, #06d6a0, #118577)">
+                            <span class="thumb-icon">🩹</span>
+                            <span class="duration-badge">12:20</span>
+                            <div class="play-overlay">▶</div>
+                        </div>
+                        <div class="learning-info">
+                            <span class="learning-tag">Essential</span>
+                            <h4>First Aid Fundamentals</h4>
+                            <p>Wounds, fractures, shock treatment, and triage basics</p>
+                            <div class="learning-meta">
+                                <span>👁 4.5K views</span>
+                                <span>⭐ 5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="learning-card" onclick="playLesson('emergency-kit')">
+                        <div class="learning-thumb" style="background: linear-gradient(135deg, #ffd166, #ef8c00)">
+                            <span class="thumb-icon">🎒</span>
+                            <span class="duration-badge">4:10</span>
+                            <div class="play-overlay">▶</div>
+                        </div>
+                        <div class="learning-info">
+                            <span class="learning-tag">Starter</span>
+                            <h4>Building Your Emergency Kit</h4>
+                            <p>72-hour kit essentials every student should have</p>
+                            <div class="learning-meta">
+                                <span>👁 5.2K views</span>
+                                <span>⭐ 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ltab-content" id="ltab-lessons">
+                <div class="lesson-list">
+                    <div class="lesson-row" onclick="openLesson('module1')">
+                        <div class="lesson-num">01</div>
+                        <div class="lesson-info">
+                            <h4>Introduction to Disaster Preparedness</h4>
+                            <p>Understanding risk, vulnerability, and community resilience</p>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="lesson-time">15 min</span>
+                            <span class="lesson-status done">✓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-row" onclick="openLesson('module2')">
+                        <div class="lesson-num">02</div>
+                        <div class="lesson-info">
+                            <h4>Earthquake Preparedness & Response</h4>
+                            <p>Structural safety, evacuation routes, and post-quake actions</p>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="lesson-time">20 min</span>
+                            <span class="lesson-status done">✓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-row active-lesson" onclick="openLesson('module3')">
+                        <div class="lesson-num">03</div>
+                        <div class="lesson-info">
+                            <h4>Fire Safety & Evacuation</h4>
+                            <p>RACE protocol, fire classes, extinguisher types, exit strategies</p>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="lesson-time">25 min</span>
+                            <span class="lesson-status in-progress">▶ Resume</span>
+                        </div>
+                    </div>
+                    <div class="lesson-row" onclick="openLesson('module4')">
+                        <div class="lesson-num">04</div>
+                        <div class="lesson-info">
+                            <h4>Flood & Water Emergency Response</h4>
+                            <p>Warning systems, evacuation, and long-term recovery</p>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="lesson-time">18 min</span>
+                            <span class="lesson-status locked">🔒</span>
+                        </div>
+                    </div>
+                    <div class="lesson-row" onclick="openLesson('module5')">
+                        <div class="lesson-num">05</div>
+                        <div class="lesson-info">
+                            <h4>Medical First Response</h4>
+                            <p>Triage, CPR, bleeding control, and emergency communications</p>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="lesson-time">30 min</span>
+                            <span class="lesson-status locked">🔒</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ltab-content" id="ltab-checklists">
+                <div class="checklists-grid">
+                    <div class="checklist-card">
+                        <div class="checklist-header earthquake-header">
+                            <span>🏚️</span>
+                            <h4>Earthquake Preparedness</h4>
+                        </div>
+                        <div class="checklist-items" id="eq-checklist">
+                            <label class="check-item"><input type="checkbox" checked
+                                    onchange="updateChecklist()"><span>Identify safe spots in every room</span></label>
+                            <label class="check-item"><input type="checkbox" checked
+                                    onchange="updateChecklist()"><span>Practice Drop, Cover, Hold On</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Secure
+                                    heavy furniture to walls</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Create a
+                                    family emergency plan</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Know
+                                    campus evacuation routes</span></label>
+                        </div>
+                        <div class="checklist-progress">2/5 Complete</div>
+                    </div>
+                    <div class="checklist-card">
+                        <div class="checklist-header fire-header">
+                            <span>🔥</span>
+                            <h4>Fire Safety Checklist</h4>
+                        </div>
+                        <div class="checklist-items">
+                            <label class="check-item"><input type="checkbox" checked
+                                    onchange="updateChecklist()"><span>Know all fire exit locations</span></label>
+                            <label class="check-item"><input type="checkbox" checked
+                                    onchange="updateChecklist()"><span>Locate fire extinguishers on
+                                    campus</span></label>
+                            <label class="check-item"><input type="checkbox" checked
+                                    onchange="updateChecklist()"><span>Test smoke detectors monthly</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Never
+                                    use elevators during fire</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Know the
+                                    assembly point</span></label>
+                        </div>
+                        <div class="checklist-progress">3/5 Complete</div>
+                    </div>
+                    <div class="checklist-card">
+                        <div class="checklist-header flood-header">
+                            <span>🌊</span>
+                            <h4>Flood Preparedness</h4>
+                        </div>
+                        <div class="checklist-items">
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Know
+                                    your campus flood zones</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Sign up
+                                    for emergency alerts</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Keep
+                                    important documents waterproof</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Know
+                                    nearest high-ground areas</span></label>
+                            <label class="check-item"><input type="checkbox" onchange="updateChecklist()"><span>Prepare
+                                    emergency water supply</span></label>
+                        </div>
+                        <div class="checklist-progress">0/5 Complete</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────── -->
+        <!--  SECTION: PROGRESS             -->
+        <!-- ─────────────────────────────── -->
+        <section class="section" id="section-progress">
+            <div class="section-head-row">
+                <div>
+                    <h2 class="section-title">📊 My Progress</h2>
+                    <p class="section-sub">Track your preparedness journey and performance analytics</p>
+                </div>
+            </div>
+
+            <div class="progress-grid">
+                <!-- OVERALL PROGRESS -->
+                <div class="progress-overview card-glass">
+                    <h3>Overall Preparedness</h3>
+                    <div class="big-progress-wrap">
+                        <svg class="big-score-svg" viewBox="0 0 200 200">
+                            <circle class="big-track" cx="100" cy="100" r="85" />
+                            <circle class="big-fill" cx="100" cy="100" r="85" id="bigFill" />
+                        </svg>
+                        <div class="big-score-label">
+                            <span class="big-num" id="bigScoreNum">72%</span>
+                            <span class="big-txt">Prepared</span>
+                        </div>
+                    </div>
+                    <div class="progress-breakdown">
+                        <div class="breakdown-row">
+                            <span>Knowledge</span>
+                            <div class="breakdown-bar">
+                                <div class="breakdown-fill" style="width:85%"></div>
+                            </div>
+                            <span>85%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Skills</span>
+                            <div class="breakdown-bar">
+                                <div class="breakdown-fill skill-fill" style="width:68%"></div>
+                            </div>
+                            <span>68%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Readiness</span>
+                            <div class="breakdown-bar">
+                                <div class="breakdown-fill ready-fill" style="width:55%"></div>
+                            </div>
+                            <span>55%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CATEGORY SCORES -->
+                <div class="category-scores card-glass">
+                    <h3>Category Performance</h3>
+                    <div class="cat-list">
+                        <div class="cat-row">
+                            <span class="cat-icon">🏚️</span>
+                            <div class="cat-info">
+                                <span>Earthquake</span>
+                                <div class="cat-bar">
+                                    <div class="cat-fill eq-fill" style="width:95%"></div>
+                                </div>
+                            </div>
+                            <span class="cat-score">95%</span>
+                        </div>
+                        <div class="cat-row">
+                            <span class="cat-icon">🔥</span>
+                            <div class="cat-info">
+                                <span>Fire</span>
+                                <div class="cat-bar">
+                                    <div class="cat-fill fire-fill" style="width:60%"></div>
+                                </div>
+                            </div>
+                            <span class="cat-score">60%</span>
+                        </div>
+                        <div class="cat-row">
+                            <span class="cat-icon">🌊</span>
+                            <div class="cat-info">
+                                <span>Flood</span>
+                                <div class="cat-bar">
+                                    <div class="cat-fill flood-fill" style="width:10%"></div>
+                                </div>
+                            </div>
+                            <span class="cat-score">10%</span>
+                        </div>
+                        <div class="cat-row">
+                            <span class="cat-icon">🏥</span>
+                            <div class="cat-info">
+                                <span>First Aid</span>
+                                <div class="cat-bar">
+                                    <div class="cat-fill aid-fill" style="width:40%"></div>
+                                </div>
+                            </div>
+                            <span class="cat-score">40%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WEEKLY ACTIVITY -->
+                <div class="weekly-activity card-glass">
+                    <h3>Weekly Activity</h3>
+                    <div class="week-chart">
+                        <div class="week-bar-group">
+                            <div class="week-bar" style="height:60%"></div><span>Mon</span>
+                        </div>
+                        <div class="week-bar-group">
+                            <div class="week-bar active" style="height:90%"></div><span>Tue</span>
+                        </div>
+                        <div class="week-bar-group">
+                            <div class="week-bar" style="height:40%"></div><span>Wed</span>
+                        </div>
+                        <div class="week-bar-group">
+                            <div class="week-bar active" style="height:75%"></div><span>Thu</span>
+                        </div>
+                        <div class="week-bar-group">
+                            <div class="week-bar" style="height:55%"></div><span>Fri</span>
+                        </div>
+                        <div class="week-bar-group">
+                            <div class="week-bar active" style="height:80%"></div><span>Sat</span>
+                        </div>
+                        <div class="week-bar-group">
+                            <div class="week-bar today" style="height:30%"></div><span>Sun</span>
+                        </div>
+                    </div>
+                    <div class="week-legend">
+                        <span>📅 7 sessions this week</span>
+                        <span>⏱ 3h 20min total</span>
+                    </div>
+                </div>
+
+                <!-- DRILL HISTORY -->
+                <div class="drill-history card-glass">
+                    <h3>Drill History</h3>
+                    <div class="history-list">
+                        <div class="history-row">
+                            <span class="hist-icon eq">🏚️</span>
+                            <div class="hist-info">
+                                <span>Earthquake Drill</span>
+                                <small>Completed • Score: 950/1000</small>
+                            </div>
+                            <span class="hist-date">Today</span>
+                        </div>
+                        <div class="history-row">
+                            <span class="hist-icon fire">🔥</span>
+                            <div class="hist-info">
+                                <span>Fire Evacuation</span>
+                                <small>In Progress • 40% complete</small>
+                            </div>
+                            <span class="hist-date">2 days ago</span>
+                        </div>
+                        <div class="history-row">
+                            <span class="hist-icon eq">🏚️</span>
+                            <div class="hist-info">
+                                <span>Earthquake Drill</span>
+                                <small>Completed • Score: 820/1000</small>
+                            </div>
+                            <span class="hist-date">5 days ago</span>
+                        </div>
+                        <div class="history-row">
+                            <span class="hist-icon fire">🔥</span>
+                            <div class="hist-info">
+                                <span>Fire Evacuation</span>
+                                <small>Completed • Score: 780/1000</small>
+                            </div>
+                            <span class="hist-date">1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────── -->
+        <!--  SECTION: ACHIEVEMENTS         -->
+        <!-- ─────────────────────────────── -->
+        <section class="section" id="section-achievements">
+            <div class="section-head-row">
+                <div>
+                    <h2 class="section-title">🏆 Achievements & Rewards</h2>
+                    <p class="section-sub">Earn badges, climb the leaderboard, and become a certified safety hero</p>
+                </div>
+                <div class="ach-summary">
+                    <span>8 earned</span>
+                    <span>·</span>
+                    <span>3 in progress</span>
+                </div>
+            </div>
+
+            <!-- LEVEL PROGRESS BAR -->
+            <div class="level-progress-card card-glass">
+                <div class="level-info">
+                    <div class="curr-level">
+                        <span class="level-circle" id="levelCircle">4</span>
+                        <span>Hero</span>
+                    </div>
+                    <div class="level-bar-wrap">
+                        <div class="level-bar">
+                            <div class="level-fill" id="levelFill" style="width:72%"></div>
+                        </div>
+                        <div class="level-bar-labels">
+                            <span>1,450 XP</span>
+                            <span>Next level at 2,000 XP</span>
+                        </div>
+                    </div>
+                    <div class="next-level">
+                        <span class="level-circle next">5</span>
+                        <span>Guardian</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BADGES GRID -->
+            <h3 class="ach-subhead">🎖 Earned Badges</h3>
+            <div class="badges-showcase">
+                <div class="badge-item-full earned" onclick="showBadgeInfo('first-drill')">
+                    <div class="badge-glow eq"></div>
+                    <span class="badge-emoji">🏚️</span>
+                    <span class="badge-name">Earthquake Hero</span>
+                    <span class="badge-desc">Completed first earthquake drill</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('speed')">
+                    <div class="badge-glow fire"></div>
+                    <span class="badge-emoji">⚡</span>
+                    <span class="badge-name">Speed Runner</span>
+                    <span class="badge-desc">Evacuated in under 3 minutes</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('knowledge')">
+                    <div class="badge-glow purple"></div>
+                    <span class="badge-emoji">🧠</span>
+                    <span class="badge-name">Safety Scholar</span>
+                    <span class="badge-desc">Completed 5 learning modules</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('streak')">
+                    <div class="badge-glow gold"></div>
+                    <span class="badge-emoji">🔥</span>
+                    <span class="badge-name">7-Day Streak</span>
+                    <span class="badge-desc">Practiced 7 days in a row</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('cpr')">
+                    <div class="badge-glow green"></div>
+                    <span class="badge-emoji">❤️</span>
+                    <span class="badge-name">Life Saver</span>
+                    <span class="badge-desc">Completed CPR safety video</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('score')">
+                    <div class="badge-glow blue"></div>
+                    <span class="badge-emoji">🎯</span>
+                    <span class="badge-name">Sharp Shooter</span>
+                    <span class="badge-desc">Scored 95%+ on a drill</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('team')">
+                    <div class="badge-glow teal"></div>
+                    <span class="badge-emoji">🤝</span>
+                    <span class="badge-name">Team Player</span>
+                    <span class="badge-desc">Joined a group drill session</span>
+                </div>
+                <div class="badge-item-full earned" onclick="showBadgeInfo('first-login')">
+                    <div class="badge-glow purple"></div>
+                    <span class="badge-emoji">🛡️</span>
+                    <span class="badge-name">Guardian Initiate</span>
+                    <span class="badge-desc">Joined the SAFEGUARD platform</span>
+                </div>
+            </div>
+
+            <h3 class="ach-subhead">🔒 Locked Badges</h3>
+            <div class="badges-showcase">
+                <div class="badge-item-full locked">
+                    <span class="badge-emoji dim">🌊</span>
+                    <span class="badge-name">Wave Rider</span>
+                    <span class="badge-desc">Complete the Flood Drill</span>
+                    <span class="lock-overlay">🔒</span>
+                </div>
+                <div class="badge-item-full locked">
+                    <span class="badge-emoji dim">🏥</span>
+                    <span class="badge-name">Medic Star</span>
+                    <span class="badge-desc">Complete Medical Drill</span>
+                    <span class="lock-overlay">🔒</span>
+                </div>
+                <div class="badge-item-full locked">
+                    <span class="badge-emoji dim">💯</span>
+                    <span class="badge-name">Perfect Score</span>
+                    <span class="badge-desc">Score 100% on any drill</span>
+                    <span class="lock-overlay">🔒</span>
+                </div>
+            </div>
+
+            <!-- LEADERBOARD MINI -->
+            <div class="leaderboard-mini card-glass">
+                <h3>🏆 Campus Leaderboard</h3>
+                <div class="leaderboard-list">
+                    <div class="lb-row gold-row">
+                        <span class="lb-rank">🥇</span>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=alpha" class="lb-avatar">
+                        <span class="lb-name">Sreelakshmi A.</span>
+                        <span class="lb-score">2,850 XP</span>
+                    </div>
+                    <div class="lb-row silver-row">
+                        <span class="lb-rank">🥈</span>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=beta" class="lb-avatar">
+                        <span class="lb-name">Kiran M.</span>
+                        <span class="lb-score">2,640 XP</span>
+                    </div>
+                    <div class="lb-row bronze-row">
+                        <span class="lb-rank">🥉</span>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=gamma" class="lb-avatar">
+                        <span class="lb-name">Rohan V.</span>
+                        <span class="lb-score">2,310 XP</span>
+                    </div>
+                    <div class="lb-row you-row">
+                        <span class="lb-rank">4</span>
+                        <img src="" class="lb-avatar" id="lbUserAvatar">
+                        <span class="lb-name you-tag" id="lbUserName">You</span>
+                        <span class="lb-score">1,450 XP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--  NOTIFICATIONS PANEL                               -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="notif-overlay" id="notifOverlay" onclick="toggleNotifications()"></div>
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-head">
+            <h3>🔔 Notifications</h3>
+            <button onclick="markAllRead()">Mark all read</button>
+            <button class="close-btn" onclick="toggleNotifications()">✕</button>
+        </div>
+        <div class="notif-list">
+            <div class="notif-item unread">
+                <div class="notif-icon fire">🔥</div>
+                <div class="notif-content">
+                    <p>New Fire Evacuation Drill is waiting for you!</p>
+                    <small>10 minutes ago</small>
+                </div>
+            </div>
+            <div class="notif-item unread">
+                <div class="notif-icon gold">🏅</div>
+                <div class="notif-content">
+                    <p>You earned the <strong>7-Day Streak</strong> badge! 🎉</p>
+                    <small>1 hour ago</small>
+                </div>
+            </div>
+            <div class="notif-item unread">
+                <div class="notif-icon blue">📚</div>
+                <div class="notif-content">
+                    <p>New lesson available: <strong>Flood Survival Strategies</strong></p>
+                    <small>3 hours ago</small>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-icon green">⭐</div>
+                <div class="notif-content">
+                    <p>You've entered the Top 5 on the campus leaderboard!</p>
+                    <small>Yesterday</small>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-icon eq">🏚️</div>
+                <div class="notif-content">
+                    <p>Earthquake Drill score updated: <strong>950/1000</strong></p>
+                    <small>2 days ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  AI CHATBOT FULLSCREEN PANEL               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-panel-head">
+            <div class="chat-ai-info">
+                <span class="chat-ai-icon">🤖</span>
+                <div>
+                    <h4>Guardian AI</h4>
+                    <span class="online-badge">● Online — Instant Help</span>
+                </div>
+            </div>
+            <button onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg ai">
+                <span class="msg-avatar">🤖</span>
+                <div class="msg-bubble">
+                    Hello! I'm your Guardian AI. I can help you with disaster safety tips, drill guidance, and learning
+                    recommendations. What would you like to know? 🛡️
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ask about safety, drills, emergency tips..."
+                onkeypress="chatKeyPress(event)">
+            <button onclick="sendChat()">➤</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--  SOS EMERGENCY MODAL                               -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="sos-modal" id="sosModal">
+        <div class="sos-content">
+            <div class="sos-header">
+                <div class="sos-icon-big">🆘</div>
+                <h2>Emergency Guidance</h2>
+                <p>Select your emergency type for instant safety instructions</p>
+                <button class="close-sos" onclick="closeSOS()">✕</button>
+            </div>
+            <div class="sos-grid">
+                <button class="sos-type-btn fire-sos" onclick="showSOSGuide('fire')">
+                    <span>🔥</span>
+                    <strong>FIRE</strong>
+                    <small>Evacuation & extinguisher</small>
+                </button>
+                <button class="sos-type-btn flood-sos" onclick="showSOSGuide('flood')">
+                    <span>🌊</span>
+                    <strong>FLOOD</strong>
+                    <small>Safe zones & warnings</small>
+                </button>
+                <button class="sos-type-btn eq-sos" onclick="showSOSGuide('earthquake')">
+                    <span>🏚️</span>
+                    <strong>EARTHQUAKE</strong>
+                    <small>Drop, Cover, Hold On</small>
+                </button>
+                <button class="sos-type-btn medical-sos" onclick="showSOSGuide('medical')">
+                    <span>🏥</span>
+                    <strong>MEDICAL</strong>
+                    <small>First aid & call 911</small>
+                </button>
+            </div>
+            <div class="sos-guide-text" id="sosGuideText">
+                <p>Select an emergency type above to see step-by-step guidance</p>
+            </div>
+            <div class="sos-contacts">
+                <strong>📞 Emergency Contacts</strong>
+                <div class="contact-row">
+                    <span>Campus Security</span>
+                    <a href="tel:1234567890">123-456-7890</a>
+                </div>
+                <div class="contact-row">
+                    <span>Emergency Services</span>
+                    <a href="tel:911">📞 911</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  DRILL MODAL                               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="drill-modal" id="drillModal">
+        <div class="drill-modal-content">
+            <button class="close-drill" onclick="closeDrillModal()">✕</button>
+            <div class="drill-modal-body" id="drillModalBody">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  QUIZ MODAL                                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="drill-modal" id="quizModal">
+        <div class="drill-modal-content" style="max-width: 600px;">
+            <button class="close-drill" onclick="closeQuizModal()">✕</button>
+            <div class="drill-modal-body" id="quizModalBody">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  TOAST NOTIFICATIONS                       -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="student-dashboard.js"></script>
+</body>
+
+</html>

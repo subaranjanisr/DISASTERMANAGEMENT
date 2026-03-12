@@ -8,6 +8,14 @@
 // host as the backend (e.g. behind a proxy or when using Express static). 
 const API_BASE = (() => {
     const origin = window.location.origin;
+    // If we're on localhost but NOT on port 5000 (e.g., port 3000 or 5500), 
+    // we must point specifically to the backend on 5000.
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+        if (!origin.includes(':5000')) {
+            return 'http://localhost:5000/api/v1';
+        }
+    }
+    // For production or when served from the same origin
     if (origin && origin !== 'null' && origin !== 'file://') {
         return `${origin}/api/v1`;
     }

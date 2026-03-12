@@ -197,6 +197,25 @@ UserSchema.pre('save', async function (next) {
 });
 
 // --------------------------------------------------
+// Pre-save: Level Calculation (Gamification)
+// --------------------------------------------------
+UserSchema.pre('save', function (next) {
+    if (!this.isModified('xpPoints')) return next();
+
+    const xp = this.xpPoints || 0;
+    let newLevel = 1;
+
+    if (xp >= 15000) newLevel = 6;
+    else if (xp >= 9000) newLevel = 5;
+    else if (xp >= 5000) newLevel = 4;
+    else if (xp >= 2500) newLevel = 3;
+    else if (xp >= 1000) newLevel = 2;
+
+    this.level = newLevel;
+    next();
+});
+
+// --------------------------------------------------
 // Instance Methods
 // --------------------------------------------------
 

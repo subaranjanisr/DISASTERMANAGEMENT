@@ -23,20 +23,17 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
+                <a href="#" class="nav-item active" id="navOverview" onclick="showTab('overviewTab')">
                     <span class="nav-icon">📊</span> Overview
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="navStudents" onclick="showTab('studentsTab')">
                     <span class="nav-icon">👥</span> Students
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="navDrills" onclick="showTab('drillsTab')">
                     <span class="nav-icon">🎮</span> Drill Analytics
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="navSettings" onclick="showTab('settingsTab')">
                     <span class="nav-icon">🏛️</span> Institutional Settings
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">📢</span> Announcements
                 </a>
             </nav>
 
@@ -72,111 +69,585 @@
                 </div>
             </header>
 
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="admin-stat-card">
-                    <div class="stat-top">
-                        <span class="stat-icon students">👥</span>
-                        <span class="stat-trend up">+12%</span>
+            <!-- Tab Content: Overview -->
+            <div id="overviewTab" class="dashboard-tab">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon students">👥</span>
+                            <span class="stat-trend up">+12%</span>
+                        </div>
+                        <div class="stat-main">
+                            <h3 id="statTotalStudents">0</h3>
+                            <p>Total Students</p>
+                        </div>
                     </div>
-                    <div class="stat-main">
-                        <h3 id="statTotalStudents">0</h3>
-                        <p>Total Students</p>
+                    <div class="admin-stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon active">📈</span>
+                            <span class="stat-trend up">+5%</span>
+                        </div>
+                        <div class="stat-main">
+                            <h3 id="statActiveStudents">0</h3>
+                            <p>Active This Week</p>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon readiness">🛡️</span>
+                            <span class="stat-trend">stable</span>
+                        </div>
+                        <div class="stat-main">
+                            <h3 id="statAvgScore">0%</h3>
+                            <p>Avg Preparedness</p>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon drills">🎮</span>
+                        </div>
+                        <div class="stat-main">
+                            <h3 id="statDrillsCompleted">0</h3>
+                            <p>Drills Completed</p>
+                        </div>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="stat-top">
-                        <span class="stat-icon active">📈</span>
-                        <span class="stat-trend up">+5%</span>
+
+                <div class="dashboard-grid">
+                    <!-- Recent Students -->
+                    <section class="grid-section">
+                        <div class="section-header">
+                            <h2>Recent Registrations</h2>
+                            <button class="view-all-btn" onclick="showTab('studentsTab')">View All</button>
+                        </div>
+                        <div class="table-container">
+                            <table id="recentStudentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Status</th>
+                                        <th>Institution</th>
+                                        <th>Score</th>
+                                        <th>Joined</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data will be loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- System Health -->
+                    <section class="grid-section">
+                        <div class="section-header">
+                            <h2>Institutional Health</h2>
+                        </div>
+                        <div class="health-card">
+                            <div class="health-item">
+                                <div class="health-label">
+                                    <span>Drill Engagement</span>
+                                    <span>78%</span>
+                                </div>
+                                <div class="health-bar">
+                                    <div class="fill" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div class="health-item">
+                                <div class="health-label">
+                                    <span>Module Completion</span>
+                                    <span>64%</span>
+                                </div>
+                                <div class="health-bar">
+                                    <div class="fill" style="width: 64%; background: var(--secondary);"></div>
+                                </div>
+                            </div>
+                            <div class="health-item">
+                                <div class="health-label">
+                                    <span>Security Compliance</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="health-bar">
+                                    <div class="fill" style="width: 100%; background: var(--success);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Tab Content: Students -->
+            <div id="studentsTab" class="dashboard-tab" style="display: none;">
+                <!-- Student Overview Mini Stats -->
+                <div class="student-overview-grid">
+                    <div class="overview-tile">
+                        <div class="tile-icon pulse-blue">👥</div>
+                        <div class="tile-info">
+                            <h4 id="tileTotalStudents">0</h4>
+                            <p>Total Enrolled</p>
+                        </div>
                     </div>
-                    <div class="stat-main">
-                        <h3 id="statActiveStudents">0</h3>
-                        <p>Active This Week</p>
+                    <div class="overview-tile">
+                        <div class="tile-icon pulse-green">⚡</div>
+                        <div class="tile-info">
+                            <h4 id="tileActiveUsers">0</h4>
+                            <p>Live Now</p>
+                        </div>
+                    </div>
+                    <div class="overview-tile">
+                        <div class="tile-icon pulse-purple">🎮</div>
+                        <div class="tile-info">
+                            <h4 id="tileDrillCompletion">0%</h4>
+                            <p>Drill Completion</p>
+                        </div>
+                    </div>
+                    <div class="overview-tile">
+                        <div class="tile-icon pulse-orange">🛡️</div>
+                        <div class="tile-info">
+                            <h4 id="tileAvgPreparedness">0%</h4>
+                            <p>Avg Preparedness</p>
+                        </div>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="stat-top">
-                        <span class="stat-icon readiness">🛡️</span>
-                        <span class="stat-trend">stable</span>
+
+                <div class="student-management-layout">
+                    <!-- Left: Student List & Search -->
+                    <div class="student-list-container">
+                        <div class="list-filters">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search students..." id="studentSearch">
+                            </div>
+                            <div class="filter-actions">
+                                <select id="filterRole">
+                                    <option value="all">All Levels</option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="expert">Expert</option>
+                                </select>
+                                <button class="btn-icon">📥</button>
+                            </div>
+                        </div>
+                        <div class="student-table-wrapper">
+                            <table id="allStudentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Student Profile</th>
+                                        <th>Preparedness</th>
+                                        <th>VR Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Data -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="stat-main">
-                        <h3 id="statAvgScore">0%</h3>
-                        <p>Avg Preparedness</p>
-                    </div>
-                </div>
-                <div class="admin-stat-card">
-                    <div class="stat-top">
-                        <span class="stat-icon drills">🎮</span>
-                    </div>
-                    <div class="stat-main">
-                        <h3 id="statDrillsCompleted">0</h3>
-                        <p>Drills Completed</p>
+
+                    <!-- Right: Preparedness & Monitoring -->
+                    <div class="student-monitoring-panel">
+                        <div class="monitoring-section">
+                            <h3>Real-Time Preparedness</h3>
+                            <div class="preparedness-tracker">
+                                <div class="drill-stat">
+                                    <div class="drill-label">
+                                        <span>Earthquake Simulation</span>
+                                        <span>82% Accuracy</span>
+                                    </div>
+                                    <div class="drill-bar-container">
+                                        <div class="drill-bar earthquake" style="width: 82%"></div>
+                                    </div>
+                                </div>
+                                <div class="drill-stat">
+                                    <div class="drill-label">
+                                        <span>Flood Simulation</span>
+                                        <span>45% Accuracy</span>
+                                    </div>
+                                    <div class="drill-bar-container">
+                                        <div class="drill-bar flood" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div class="drill-stat">
+                                    <div class="drill-label">
+                                        <span>Fire Safety Drill</span>
+                                        <span>94% Accuracy</span>
+                                    </div>
+                                    <div class="drill-bar-container">
+                                        <div class="drill-bar fire" style="width: 94%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="monitoring-section">
+                            <h3>Recent Activity Log</h3>
+                            <div class="activity-log" id="studentActivityLog">
+                                <!-- Activity Items -->
+                            </div>
+                        </div>
+
+                        <div class="monitoring-section">
+                            <h3>Achievement Radar</h3>
+                            <div class="badge-grid" id="badgeTracking">
+                                <!-- Dynamic Badges -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="dashboard-grid">
-                <!-- Recent Students -->
-                <section class="grid-section">
-                    <div class="section-header">
-                        <h2>Recent Registrations</h2>
-                        <a href="#" class="view-link">View All</a>
+            <!-- Tab Content: Drill Analytics -->
+            <div id="drillsTab" class="dashboard-tab" style="display: none;">
+                <!-- Live Operational Cockpit -->
+                <div class="drill-live-hub card-glass">
+                    <div class="hub-header">
+                        <div class="hub-title">
+                            <span class="live-tag pulse">● Live Operational Feed</span>
+                            <h2>Seismic Activity Monitor</h2>
+                        </div>
+                        <div class="hub-actions">
+                            <button class="btn-console" onclick="toggleLiveDrill()">Pause Feed</button>
+                            <button class="btn-primary-gradient" onclick="triggerInstitutionalDrill()">🚀 Deploy
+                                System-Wide Drill</button>
+                        </div>
                     </div>
-                    <div class="table-container">
-                        <table id="recentStudentsTable">
-                            <thead>
-                                <tr>
-                                    <th>Student</th>
-                                    <th>Status</th>
-                                    <th>Institution</th>
-                                    <th>Score</th>
-                                    <th>Joined</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Data will be loaded via JS -->
-                            </tbody>
-                        </table>
+                    <div class="hub-dynamic-grid">
+                        <div class="monitor-cell">
+                            <span class="label">Simulated Magnitude</span>
+                            <h2 id="adminEqMag">0.0 M</h2>
+                            <div class="mini-graph" id="adminEqGraph">
+                                <span class="bar" style="--h: 10%"></span>
+                                <span class="bar" style="--h: 20%"></span>
+                                <span class="bar" style="--h: 15%"></span>
+                            </div>
+                        </div>
+                        <div class="monitor-cell">
+                            <span class="label">Active Participants</span>
+                            <h2 id="adminEqParticipants">0</h2>
+                            <p class="sub">Across 12 VR Zones</p>
+                        </div>
+                        <div class="monitor-cell">
+                            <span class="label">Thermal Integrity</span>
+                            <h2 id="adminFireHazard">24°C</h2>
+                            <div class="status-indicator" id="adminFireStatus">Ready</div>
+                        </div>
                     </div>
-                </section>
+                </div>
 
-                <!-- System Health -->
-                <section class="grid-section">
-                    <div class="section-header">
-                        <h2>Institutional Health</h2>
+                <!-- Drill Intelligence Overview -->
+                <div class="drill-intel-grid">
+                    <div class="intel-card premium-gradient-1">
+                        <div class="intel-header">
+                            <span class="intel-label">Total Drills</span>
+                            <span class="intel-icon">🎮</span>
+                        </div>
+                        <h3 id="drillTotalCount">482</h3>
+                        <p class="intel-sub">Conducted this month</p>
                     </div>
-                    <div class="health-card">
-                        <div class="health-item">
-                            <div class="health-label">
-                                <span>Drill Engagement</span>
-                                <span>78%</span>
-                            </div>
-                            <div class="health-bar">
-                                <div class="fill" style="width: 78%"></div>
-                            </div>
+                    <div class="intel-card premium-gradient-2">
+                        <div class="intel-header">
+                            <span class="intel-label">Total Participants</span>
+                            <span class="intel-icon">👥</span>
                         </div>
-                        <div class="health-item">
-                            <div class="health-label">
-                                <span>Module Completion</span>
-                                <span>64%</span>
-                            </div>
-                            <div class="health-bar">
-                                <div class="fill" style="width: 64%; background: var(--secondary);"></div>
-                            </div>
-                        </div>
-                        <div class="health-item">
-                            <div class="health-label">
-                                <span>Security Compliance</span>
-                                <span>100%</span>
-                            </div>
-                            <div class="health-bar">
-                                <div class="fill" style="width: 100%; background: var(--success);"></div>
-                            </div>
-                        </div>
+                        <h3 id="drillTotalParticipants">1,240</h3>
+                        <p class="intel-sub">Active learners</p>
                     </div>
-                </section>
+                    <div class="intel-card premium-gradient-3">
+                        <div class="intel-header">
+                            <span class="intel-label">Avg. Completion</span>
+                            <span class="intel-icon">⚡</span>
+                        </div>
+                        <h3 id="drillAvgCompletion">92%</h3>
+                        <p class="intel-sub">Completion Rate</p>
+                    </div>
+                    <div class="intel-card premium-gradient-4">
+                        <div class="intel-header">
+                            <span class="intel-label">Most Attempted</span>
+                            <span class="intel-icon">🌋</span>
+                        </div>
+                        <h3 id="drillMostPopular">Earthquake</h3>
+                        <p class="intel-sub">Simulations</p>
+                    </div>
+                </div>
+
+                <div class="drill-analysis-layout">
+                    <!-- Left Column: Performance Metrics -->
+                    <div class="drill-metrics-column">
+                        <section class="analysis-section card-glass">
+                            <div class="section-header">
+                                <h3>Drill Performance Summary</h3>
+                                <div class="export-actions">
+                                    <button class="btn-export">📥 PDF</button>
+                                    <button class="btn-export">📊 Excel</button>
+                                </div>
+                            </div>
+                            <div class="performance-table-wrapper">
+                                <table id="drillSummaryTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Drill Type</th>
+                                            <th>Attempts</th>
+                                            <th>Completed</th>
+                                            <th>Avg. Score</th>
+                                            <th>Avg. Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic Data -->
+                                        <tr>
+                                            <td><span class="drill-tag quake">Earthquake</span></td>
+                                            <td>156</td>
+                                            <td>142</td>
+                                            <td>84%</td>
+                                            <td>2m 45s</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="drill-tag flood">Flood</span></td>
+                                            <td>124</td>
+                                            <td>98</td>
+                                            <td>65%</td>
+                                            <td>4m 10s</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="drill-tag fire">Fire Safety</span></td>
+                                            <td>202</td>
+                                            <td>194</td>
+                                            <td>91%</td>
+                                            <td>1m 50s</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="analysis-section card-glass">
+                            <div class="section-header">
+                                <h3>Difficulty Insights & Trends</h3>
+                            </div>
+                            <div class="trends-container">
+                                <div class="trend-visual-placeholder">
+                                    <!-- A premium looking CSS-only chart representation -->
+                                    <div class="chart-bars">
+                                        <div class="bar-group">
+                                            <div class="bar-fill"
+                                                style="height: 80%; background: var(--primary-gradient);"></div>
+                                            <span>Mon</span>
+                                        </div>
+                                        <div class="bar-group">
+                                            <div class="bar-fill"
+                                                style="height: 65%; background: var(--primary-gradient);"></div>
+                                            <span>Tue</span>
+                                        </div>
+                                        <div class="bar-group">
+                                            <div class="bar-fill"
+                                                style="height: 90%; background: var(--primary-gradient);"></div>
+                                            <span>Wed</span>
+                                        </div>
+                                        <div class="bar-group">
+                                            <div class="bar-fill"
+                                                style="height: 75%; background: var(--primary-gradient);"></div>
+                                            <span>Thu</span>
+                                        </div>
+                                        <div class="bar-group">
+                                            <div class="bar-fill"
+                                                style="height: 85%; background: var(--primary-gradient);"></div>
+                                            <span>Fri</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="difficulty-labels">
+                                    <div class="diff-item">
+                                        <span class="dot hard"></span>
+                                        <div class="diff-text">
+                                            <h4>Flood Response (Advanced)</h4>
+                                            <p>Lowest completion rate (45%) identified in Phase 2</p>
+                                        </div>
+                                    </div>
+                                    <div class="diff-item">
+                                        <span class="dot easy"></span>
+                                        <div class="diff-text">
+                                            <h4>Fire Evacuation</h4>
+                                            <p>Highest efficiency (96%) across all levels</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Right Column: AI & Top Performers -->
+                    <div class="drill-shoutout-column">
+                        <section class="analysis-section card-glass ai-insight-box">
+                            <div class="insight-header">
+                                <span class="ai-icon">✨</span>
+                                <h3>AI Training Recommendations</h3>
+                            </div>
+                            <div class="ai-recommendations" id="aiRecommendations">
+                                <div class="rec-item">
+                                    <p>Based on <strong>Flood Drill</strong> data, students are struggling with "High
+                                        Ground Identification".</p>
+                                    <button class="btn-rec">Assign Module 4B</button>
+                                </div>
+                                <div class="rec-item">
+                                    <p>Overall readiness in <strong>Earthquake</strong> drills is trending UP. Increase
+                                        difficulty level for Grade 10.</p>
+                                    <button class="btn-rec">Scale Difficulty</button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="analysis-section card-glass">
+                            <div class="section-header">
+                                <h3>Top Performers</h3>
+                            </div>
+                            <div class="top-performers-list" id="topPerformersList">
+                                <!-- Dynamic List -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
             </div>
-        </main>
+
+            <div class="settings-grid">
+                <!-- Sidebar for Settings Categories -->
+                <aside class="settings-nav">
+                    <button class="s-nav-item active" onclick="switchSettingsCategory('profile')">🏛️
+                        Profile</button>
+                    <button class="s-nav-item" onclick="switchSettingsCategory('drills')">🌋 Drill Config</button>
+                    <button class="s-nav-item" onclick="switchSettingsCategory('users')">👥 User Roles</button>
+                    <button class="s-nav-item" onclick="switchSettingsCategory('security')">🔒 Security</button>
+                    <button class="s-nav-item" onclick="switchSettingsCategory('branding')">🎨 Branding</button>
+                </aside>
+
+                <!-- Settings Dynamic Content -->
+                <div class="settings-content-wrapper card-glass">
+                    <!-- Profile Section -->
+                    <div id="settings-profile" class="settings-pane active">
+                        <div class="pane-header">
+                            <h2>Institutional Profile</h2>
+                            <p>Manage your institution's core identification and contact details.</p>
+                        </div>
+                        <form class="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Institution Name</label>
+                                    <input type="text" value="SAFEGUARD Academy of Resilience" id="instName">
+                                </div>
+                                <div class="form-group">
+                                    <label>Institution ID</label>
+                                    <input type="text" value="SG-RES-1024" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Street Address</label>
+                                <input type="text" value="123 Preparedness Way, Tech District">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Contact Email</label>
+                                    <input type="email" value="admin@safeguard.edu">
+                                </div>
+                                <div class="form-group">
+                                    <label>Support Phone</label>
+                                    <input type="text" value="+91 98765 43210">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+
+                    <!-- Drill Configuration Section -->
+                    <div id="settings-drills" class="settings-pane">
+                        <div class="pane-header">
+                            <h2>Drill Engine configuration</h2>
+                            <p>Define how simulation drills are deployed and scored across the system.</p>
+                        </div>
+                        <div class="drill-config-stack">
+                            <div class="config-card">
+                                <div class="config-info">
+                                    <h4>Earthquake Simulation</h4>
+                                    <p>Global difficulty and passing threshold.</p>
+                                </div>
+                                <div class="config-controls">
+                                    <select>
+                                        <option>Beginner</option>
+                                        <option selected>Intermediate</option>
+                                        <option>Expert</option>
+                                    </select>
+                                    <input type="number" value="75" class="small-input"> %
+                                </div>
+                            </div>
+                            <div class="config-card">
+                                <div class="config-info">
+                                    <h4>Auto-Schedule Drills</h4>
+                                    <p>Randomly deploy unannounced drills per semester.</p>
+                                </div>
+                                <div class="config-controls">
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Section -->
+                    <div id="settings-security" class="settings-pane">
+                        <div class="pane-header">
+                            <h2>Security & Access Control</h2>
+                            <p>Manage institutional security policies and authentication layers.</p>
+                        </div>
+                        <div class="security-stack">
+                            <div class="sec-item">
+                                <div class="sec-icon">🔐</div>
+                                <div class="sec-info">
+                                    <h4>Two-Factor Authentication (2FA)</h4>
+                                    <p>Enforce 2FA for all administrator accounts.</p>
+                                </div>
+                                <button class="btn btn-secondary">Enable</button>
+                            </div>
+                            <div class="sec-item">
+                                <div class="sec-icon">🕒</div>
+                                <div class="sec-info">
+                                    <h4>Session Timeout</h4>
+                                    <p>Automatically logout inactive sessions after (minutes).</p>
+                                </div>
+                                <input type="number" value="30" class="small-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Branding Section -->
+                    <div id="settings-branding" class="settings-pane">
+                        <div class="pane-header">
+                            <h2>Institutional Branding</h2>
+                            <p>Customise the platform interface to match your institution's identity.</p>
+                        </div>
+                        <div class="branding-tools">
+                            <div class="color-picker-group">
+                                <label>Primary Theme Color</label>
+                                <div class="color-swatch-row">
+                                    <div class="swatch active" style="background: #4f46e5;"></div>
+                                    <div class="swatch" style="background: #0ea5e9;"></div>
+                                    <div class="swatch" style="background: #10b981;"></div>
+                                    <div class="swatch" style="background: #f43f5e;"></div>
+                                    <input type="color" value="#4f46e5">
+                                </div>
+                            </div>
+                            <div class="logo-upload">
+                                <label>Institution Logo</label>
+                                <div class="upload-zone">
+                                    <span>Click to upload or drag logo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
     </div>
 
     <script src="admin-dashboard.js"></script>
